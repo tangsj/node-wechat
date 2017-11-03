@@ -1,0 +1,4 @@
+node_modules
+cache/**/*.json
+media/**/*.mp3
+media/**/*.amr
