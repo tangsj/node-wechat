@@ -11,21 +11,21 @@
 
 ### 授权地址重定向（显式和隐式）
 
-URL：http://api.tangsj.com/wx/redirect?url=http%3A%2F%2Fweixin.tangsj.com%2Findex.html%3Fparams1%3D1%26params%3D2&pro=fcbk
+使用demoURL：http://api.tangsj.com/wx/redirect?url=http%3A%2F%2Fweixin.tangsj.com%2Findex.html%3Fparams1%3D1%26params%3D2&pro=fcbk
 
 参数说明：
 
-url - 回调url地址，需要url编码
+url - 回调url地址，需要url编码
 
 pro - 对应公众号配置名称，在config的wx对象下配置
 
 type -  授权类型 snsapi_base（隐式授权） snsapi_userinfo（显示授权），默认显示授权
 
-### 微信分享
+### 微信分享
 
 获取wx.config 配置参数 
 
-接口地址：/wx/jsapi
+接口地址：/wx/jsapi
 
 请求类型：post
 
@@ -53,7 +53,7 @@ type -  授权类型 snsapi_base（隐式授权） snsapi_userinfo（显示授�
 
 从微信服务器下载用户上传的多媒体文件到自己的服务器上（视频，音频）
 
-接口地址：/wx/media/download
+接口地址：/wx/media/download
 
 请求类型：get
 
@@ -76,7 +76,7 @@ type -  授权类型 snsapi_base（隐式授权） snsapi_userinfo（显示授�
 
 简单的文件上传，和微信的媒体文件上传无关
 
-接口地址：/file/single
+接口地址：/file/single
 
 请求类型：post
 
@@ -84,7 +84,7 @@ type -  授权类型 snsapi_base（隐式授权） snsapi_userinfo（显示授�
 
 ### 微信普通token
 
-微信的token有 2个小时的有效期，这里做了全局的缓存，缓存目录为cache
+微信的token有 2个小时的有效期，这里做了全局的缓存，缓存目录为cache
 
 缓存 json 文件名格式：access_token_${appid}.json
 
