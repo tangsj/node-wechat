@@ -15,7 +15,7 @@
 
 参数说明：
 
-url - 回调url地址，需要url编码
+url - 回调url地址，需要url编码, url中可以添加其它参数，如parms1,params2
 
 pro - 对应公众号配置名称，在config的wx对象下配置
 
