@@ -101,7 +101,7 @@ Token.accessToken(config);
 
 有效时间同样为 2小时
 
-缓存 json 文件名格式：access_token_${appid}.json
+缓存 json 文件名格式：jsapi_ticket_${appid}.json
 
 
 调取方法：
