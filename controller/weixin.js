@@ -6,6 +6,7 @@ const utils = require('../utils');
 const token = require('./token');
 const CryptoJs = require('crypto-js');
 const jsSHA = require('jssha');
+const ffmpeg = require('ffmpeg');
 
 const WX = {
   /**
@@ -169,7 +170,9 @@ const WX = {
     token.accessToken(wxconfig).then(t => {
       const fileFolder = path.resolve(__dirname, '../media', wxconfig.appId);
       const fileName = media_id + '.amr';
+      const mp3Name = media_id + '.mp3';
       const filePath = path.join(fileFolder, fileName);
+      const mp3FilePath = path.join(fileFolder, mp3Name);
 
       function createFile() {
         if (!fs.existsSync(filePath)) { // 音频文件是否存在
@@ -205,9 +208,54 @@ const WX = {
           },
           responseType: 'stream',
         }).then(mediaRes => {
-          const s = fs.createWriteStream(filePath);
-          mediaRes.data.pipe(s);
+          const writer = fs.createWriteStream(filePath);
+          writer.on('pipe', () => {
+          });
+          writer.on('finish', () => {
+            console.log('文件写完了。开始转换mp3');
+            WX._mp3Converter(filePath, mp3FilePath).then(() => {
+              res.json({
+                code: 200,
+                message: '文件下载到服务成功',
+                data: {
+                  filename: mp3Name,
+                }
+              });
+            }, (err) => {
+              res.json({
+                code: 500,
+                message: '文件下载到服务失败',
+                data: err,
+              });
+            });
+          });
+
+          mediaRes.data.pipe(writer);
         });
+      }
+    });
+  },
+  /**
+   * 将amr 转换为 mp3
+   */
+  _mp3Converter(amrpath, mp3path) {
+    return new Promise((resolve, reject) => {
+      // 得用ffmpeg 将 amr 转换为 mp3
+      try {
+        var process = new ffmpeg(amrpath);
+        process.then(function (voice) {
+          voice.fnExtractSoundToMP3(mp3path, function (error, file) {
+            if (!error) {
+              resolve();
+            } else {
+              reject(error);
+            }
+          });
+        }, function (err) {
+          reject(err);
+        });
+      } catch (e) {
+        reject(e.msg);
       }
     });
   },
